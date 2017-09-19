@@ -1,3 +1,13 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import Ride, Day
+
+
+class RideAdmin(admin.ModelAdmin):
+    list_display = ('title', 'origin_direction', 'destination', 'hour', 'user', 'date_publication')
+
+class DayAdmin(admin.ModelAdmin):
+    list_display = ('name', )
+
+admin.site.register(Ride, RideAdmin)
+admin.site.register(Day)
