@@ -17,6 +17,14 @@ DESTINATIONS = (
     ('hospital', 'Campus Hospital'),
 )
 
+class Destination(models.Model):
+    name = models.CharField(max_length=30, null=False)
+    coordinate_x = models.FloatField(null=False)
+    coordinate_y = models.FloatField(null=False)
+
+    def __str__(self):
+        return self.name
+
 class Day(models.Model):
     name = models.CharField(max_length=15)
 
@@ -28,7 +36,7 @@ class Ride(models.Model):
     origin_direction = models.CharField(max_length=100, null=False)
     origin_coordinate_x = models.FloatField(null=False)
     origin_coordinate_y = models.FloatField(null=False)
-    destination = models.CharField(choices=DESTINATIONS, null=False, max_length=40)
+    destination = models.ForeignKey(Destination)
     days = models.ManyToManyField(Day)
     hour = models.TimeField(null=False, blank=False)
     description = models.CharField(max_length=150, null=True, blank=True)
