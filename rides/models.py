@@ -40,8 +40,11 @@ class Ride(models.Model):
     days = models.ManyToManyField(Day)
     hour = models.TimeField(null=False, blank=False)
     description = models.CharField(max_length=150, null=True, blank=True)
-    user = models.ForeignKey(User)
     date_publication = models.DateTimeField(auto_now_add=True)
+    rating = models.FloatField(default=0)
+    passengers = models.PositiveIntegerField()
+    price = models.FloatField(default=0)
+    user = models.ForeignKey(User)
 
     def __str__(self):
         return self.title
