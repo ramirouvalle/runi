@@ -1,15 +1,61 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
-</head>
-<body>
-<h2>Lista de rides</h2>
-{% for ride in rides %}
-<ul>
-    <li>{{ ride.title }}</li>
-</ul>
-{% endfor %}
-</body>
-</html>
+{% extends "./base.html" %}
+
+{% block content %}
+<div class="row">
+
+    <div class="col-md-4 col-lg-3">
+        <div class="card my-1">
+            <div class="card-block">
+                <h4 class="card-title">Filtrar</h4>
+                <hr>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-8 col-lg-9">
+
+        <div class="card my-1">
+            <div class="card-block">
+                <h4 class="card-title">Lista de rides</h4>
+                <hr>
+                <div class="row">
+
+                    {% for ride in rides %}
+                    <div class="col-12 mb-3">
+                        <div class="row">
+                            <div class="col-12 mb-1">
+                                <a href="{{ride.id}}">{{ ride.title }}</a> <span class="badge badge-default">{{ ride.destination }}</span>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12 col-sm-6 col-md-4">
+                                <strong>Días:</strong> {{ ride.days.all|join:", " }} <br>
+                                <strong>Horario:</strong> {{ ride.hour }}
+                            </div>
+                            <div class="col-12 col-sm-6 col-md-4">
+                                <strong>Asientos:</strong> {{ ride.passengers }} <br>
+                                <strong>Apoyo económico:</strong>
+                                {% if ride.price == 0 %}
+                                Gratuito
+                                {% else %}
+                                ${{ ride.price }}
+                                {% endif %}
+                            </div>
+                            <div class="col-12 col-sm-12 col-md-4">
+                                <strong>Anfitrión:</strong> <a href="#">{{ ride.user.username }}</a>
+                            </div>
+                        </div>
+
+                    </div>
+                    <hr>
+                    {% endfor %}
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+{% endblock content %}
