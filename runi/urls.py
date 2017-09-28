@@ -1,4 +1,4 @@
-"""rides_app URL Configuration
+"""runi URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/1.11/topics/http/urls/
