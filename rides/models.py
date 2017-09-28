@@ -19,8 +19,8 @@ DESTINATIONS = (
 
 class Destination(models.Model):
     name = models.CharField(max_length=30, null=False)
-    coordinate_x = models.FloatField(null=False)
-    coordinate_y = models.FloatField(null=False)
+    coordinate_x = models.CharField(max_length=50, null=False)
+    coordinate_y = models.CharField(max_length=50, null=False)
 
     def __str__(self):
         return self.name
@@ -34,8 +34,8 @@ class Day(models.Model):
 class Ride(models.Model):
     title = models.CharField(max_length=80, null=False)
     origin_direction = models.CharField(max_length=100, null=False)
-    origin_coordinate_x = models.FloatField(null=False)
-    origin_coordinate_y = models.FloatField(null=False)
+    origin_coordinate_x = models.CharField(max_length=50, null=False)
+    origin_coordinate_y = models.CharField(max_length=50, null=False)
     destination = models.ForeignKey(Destination)
     days = models.ManyToManyField(Day)
     hour = models.TimeField(null=False, blank=False)
