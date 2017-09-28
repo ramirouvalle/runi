@@ -17,6 +17,7 @@ DESTINATIONS = (
     ('hospital', 'Campus Hospital'),
 )
 
+
 class Destination(models.Model):
     name = models.CharField(max_length=30, null=False)
     coordinate_x = models.CharField(max_length=50, null=False)
@@ -25,11 +26,13 @@ class Destination(models.Model):
     def __str__(self):
         return self.name
 
+
 class Day(models.Model):
     name = models.CharField(max_length=15)
 
     def __str__(self):
         return self.name
+
 
 class Ride(models.Model):
     title = models.CharField(max_length=80, null=False)

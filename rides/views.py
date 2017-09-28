@@ -7,6 +7,7 @@ from .models import Ride
 def home(request):
     return render(request, 'rides/base.html')
 
+
 class RidesListView(ListView):
     model = Ride
     context_object_name = 'rides'
@@ -15,6 +16,7 @@ class RidesListView(ListView):
 
     def get_queryset(self):
         return Ride.objects.all()
+
 
 class RideDetailView(DetailView):
     model = Ride
