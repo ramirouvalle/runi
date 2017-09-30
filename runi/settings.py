@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rides.apps.RidesConfig'
+    'rides.apps.RidesConfig',
+    'users.apps.UsersConfig'
 ]
 
 MIDDLEWARE = [
