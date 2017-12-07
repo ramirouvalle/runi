@@ -19,7 +19,8 @@ from django.contrib import admin
 from rides import views
 
 urlpatterns = [
-    url(r'^$', views.home),
+    url(r'^$', views.home, name='index'),
     url(r'^admin/', admin.site.urls),
     url(r'^rides/', include('rides.urls')),
+    url(r'^users/', include('users.urls')),
 ]
