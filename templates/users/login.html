@@ -2,4 +2,9 @@
 
 {% block content %}
 <h1>Inicia sesión</h1>
+<form action="{% url 'users:login' %}" method="post">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Submit" />
+</form>
 {% endblock content %}
