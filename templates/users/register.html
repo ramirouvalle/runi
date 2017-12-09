@@ -1,0 +1,10 @@
+{% extends "rides/base.html" %}
+
+{% block content %}
+<h1>Registrate</h1>
+<form action="{% url 'users:register' %}" method="post">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Submit" />
+</form>
+{% endblock content %}
