@@ -2,9 +2,17 @@
 
 {% block content %}
 <h1>Registrate</h1>
+
+{% if not saved %}
 <form action="{% url 'users:register' %}" method="post">
     {% csrf_token %}
     {{ form }}
-    <input type="submit" value="Submit" />
+    <input type="submit" value="Submit"/>
 </form>
+{% endif %}
+
+{% if saved %}
+<p>Usuario creado correctamente</p>
+{% endif %}
+
 {% endblock content %}

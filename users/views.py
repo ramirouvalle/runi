@@ -1,5 +1,8 @@
-from django.contrib.auth import authenticate
-from django.shortcuts import render
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.models import User
+from django.http import HttpResponseRedirect
+from django.shortcuts import render, redirect
+from django.core.urlresolvers import reverse
 
 from .forms import LoginForm, RegisterForm
 
@@ -26,11 +29,11 @@ def login(request):
 
 def register(request):
     if request.method == "POST":
-        print(request.POST)
         form = RegisterForm(request.POST)
 
         if form.is_valid():
-            print('user created')
+            form.save()
+            return render(request, "users/register.html", {'saved': True})
     else:
         form = RegisterForm()
 
