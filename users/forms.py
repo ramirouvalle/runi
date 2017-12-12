@@ -1,4 +1,5 @@
 from django import forms
+from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 
@@ -6,6 +7,12 @@ from django.core.exceptions import ValidationError
 class LoginForm(forms.Form):
     username = forms.CharField(max_length=30)
     password = forms.CharField(max_length=64, widget=forms.PasswordInput)
+
+    def clean(self):
+        data = self.cleaned_data
+        user = authenticate(username=data.get('username'), password=data.get('password'))
+        if user is None:
+            raise ValidationError("Usuario o contraseña incorrecta")
 
 
 class RegisterForm(forms.Form):
