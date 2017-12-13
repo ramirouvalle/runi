@@ -1,4 +1,6 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
+from django.utils.decorators import method_decorator
 from django.views.generic import ListView, DetailView
 
 from .models import Ride
@@ -13,6 +15,10 @@ class RidesListView(ListView):
     context_object_name = 'rides'
     template_name = 'rides/ride_list.html'
     ordering = ['-date_publication']
+
+    @method_decorator(login_required(login_url='users:login'))
+    def dispatch(self, *args, **kwargs):
+        return super(RidesListView, self).dispatch(*args, **kwargs)
 
     def get_queryset(self):
         return Ride.objects.all()
