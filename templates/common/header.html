@@ -14,15 +14,21 @@
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'rides:rides' %}">Rides</a>
             </li>
+            
+            {% if not user.is_authenticated %}
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'users:login' %}">Iniciar sesión</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'users:register' %}">Registrar</a>
             </li>
+            {% endif %}
+
+            {% if user.is_authenticated %}
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'users:logout' %}">Cerrar sesión</a>
             </li>
+            {% endif %}
         </ul>
     </div>
 </nav>

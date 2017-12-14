@@ -10,20 +10,18 @@ def home(request):
     return render(request, 'rides/base.html')
 
 
+@method_decorator(login_required(login_url='users:login'), 'dispatch')
 class RidesListView(ListView):
     model = Ride
     context_object_name = 'rides'
     template_name = 'rides/ride_list.html'
     ordering = ['-date_publication']
 
-    @method_decorator(login_required(login_url='users:login'))
-    def dispatch(self, *args, **kwargs):
-        return super(RidesListView, self).dispatch(*args, **kwargs)
-
     def get_queryset(self):
         return Ride.objects.all()
 
 
+@method_decorator(login_required(login_url='users:login'), 'dispatch')
 class RideDetailView(DetailView):
     model = Ride
     template_name = 'rides/ride_detail.html'
