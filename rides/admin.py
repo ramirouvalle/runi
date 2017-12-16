@@ -9,6 +9,7 @@ class RideAdmin(admin.ModelAdmin):
 class DayAdmin(admin.ModelAdmin):
     list_display = ('name', )
 
+
 admin.site.register(Ride, RideAdmin)
 admin.site.register(Day, DayAdmin)
 admin.site.register(Destination)

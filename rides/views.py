@@ -34,7 +34,15 @@ class RideDetailView(DetailView):
         return context
 
 
+@method_decorator(login_required(login_url='users:login'), 'dispatch')
 class NewRideView(View):
     def get(self, request):
         form = RideForm()
+        return render(request, 'rides/new_ride.html', {'form': form})
+
+    def post(self, request):
+        print(request.POST)
+        form = RideForm(request.POST)
+        if form.is_valid():
+            form.save()
         return render(request, 'rides/new_ride.html', {'form': form})
