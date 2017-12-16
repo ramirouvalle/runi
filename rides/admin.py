@@ -3,7 +3,7 @@ from .models import Ride, Day, Destination
 
 
 class RideAdmin(admin.ModelAdmin):
-    list_display = ('title', 'origin_direction', 'destination', 'hour', 'user', 'date_publication')
+    list_display = ('title', 'location', 'destination', 'hour', 'user', 'created_at')
 
 
 class DayAdmin(admin.ModelAdmin):
