@@ -1,8 +1,10 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.utils.decorators import method_decorator
+from django.views import View
 from django.views.generic import ListView, DetailView
 
+from .forms import RideForm
 from .models import Ride
 
 
@@ -30,3 +32,9 @@ class RideDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super(RideDetailView, self).get_context_data(**kwargs)
         return context
+
+
+class NewRideView(View):
+    def get(self, request):
+        form = RideForm()
+        return render(request, 'rides/new_ride.html', {'form': form})

@@ -14,7 +14,9 @@
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'rides:rides' %}">Rides</a>
             </li>
-            
+        </ul>
+
+        <ul class="navbar-nav float-right">
             {% if not user.is_authenticated %}
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'users:login' %}">Iniciar sesión</a>
