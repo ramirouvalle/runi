@@ -1,0 +1,25 @@
+{% extends "./base.html" %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-12">
+
+        {% if not id_ride %}
+        <form action="{% url 'rides:new_ride' %}" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Save">
+        </form>
+        {% else %}
+        <form action="{% url 'rides:edit_ride' id_ride %}" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Edit">
+        </form>
+        {% endif %}
+
+    </div>
+</div>
+
+{% endblock content %}

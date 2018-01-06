@@ -20,14 +20,16 @@ def login(request):
 
 
 def register(request):
+    saved_message = "Usuario registrado correctamente."
+
     if request.method == "POST":
         form = RegisterForm(request.POST)
         if form.is_valid():
             form.save()
-            return render(request, "users/register.html", {'saved': True})
+            return render(request, "users/register.html", {'saved_message': saved_message})
     else:
         form = RegisterForm()
-    return render(request, "users/register.html", {'form': form})
+    return render(request, "users/register.html", {'form': form, 'saved_message': saved_message})
 
 
 @login_required(login_url='users:login')

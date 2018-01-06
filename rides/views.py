@@ -1,5 +1,5 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.utils.decorators import method_decorator
 from django.views import View
 from django.views.generic import ListView, DetailView
@@ -38,11 +38,26 @@ class RideDetailView(DetailView):
 class NewRideView(View):
     def get(self, request):
         form = RideForm()
-        return render(request, 'rides/new_ride.html', {'form': form})
+        return render(request, 'rides/ride_form.html', {'form': form})
 
     def post(self, request):
         print(request.POST)
         form = RideForm(request.POST)
         if form.is_valid():
             form.save()
-        return render(request, 'rides/new_ride.html', {'form': form})
+        return render(request, 'rides/ride_form.html', {'form': form})
+
+
+@method_decorator(login_required(login_url='users:login'), 'dispatch')
+class EditRideView(View):
+    def get(self, request, pk):
+        ride = get_object_or_404(Ride, pk=pk, user=request.user)
+        form = RideForm(instance=ride)
+        return render(request, 'rides/ride_form.html', {'form': form, 'id_ride': pk})
+
+    def post(self, request, pk):
+        form = RideForm(request.POST)
+        if form.is_valid():
+            form.save(commit=False)
+            form.instance.save()
+        return render(request, 'rides/ride_form.html', {'form': form, 'id_ride': pk})

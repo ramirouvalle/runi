@@ -11,8 +11,8 @@
 </form>
 {% endif %}
 
-{% if saved %}
-<p>Usuario creado correctamente</p>
+{% if saved_message %}
+<p>{{ saved_message }}</p>
 {% endif %}
 
 {% endblock content %}
