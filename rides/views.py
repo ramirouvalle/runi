@@ -1,5 +1,6 @@
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.utils.decorators import method_decorator
 from django.views import View
 from django.views.generic import ListView, DetailView
@@ -41,10 +42,11 @@ class NewRideView(View):
         return render(request, 'rides/ride_form.html', {'form': form})
 
     def post(self, request):
-        print(request.POST)
         form = RideForm(request.POST)
         if form.is_valid():
             form.save()
+            messages.success(request, "Ride creado correctamente")
+            return redirect('rides:ride_detail', pk=form.instance.id)
         return render(request, 'rides/ride_form.html', {'form': form})
 
 
@@ -56,8 +58,10 @@ class EditRideView(View):
         return render(request, 'rides/ride_form.html', {'form': form, 'id_ride': pk})
 
     def post(self, request, pk):
-        form = RideForm(request.POST)
+        ride = get_object_or_404(Ride, pk=pk, user=request.user)
+        form = RideForm(request.POST, instance=ride)
         if form.is_valid():
-            form.save(commit=False)
-            form.instance.save()
+            form.save()
+            messages.success(request, "Ride modificado correctamente")
+            return redirect('rides:ride_detail', pk=pk)
         return render(request, 'rides/ride_form.html', {'form': form, 'id_ride': pk})
