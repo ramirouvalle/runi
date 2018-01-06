@@ -34,6 +34,7 @@
     {% if user.id == ride.user.id %}
     <div class="col-12 my-2">
         <a href="{% url 'rides:edit_ride' ride.id %}" class="btn btn-info bnt-round">Editar</a>
+        <button class="btn btn-danger btn-round">Eliminar</button>
     </div>
     {% endif %}
 </div>
