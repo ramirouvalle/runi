@@ -1,9 +1,10 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils.decorators import method_decorator
 from django.views import View
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView
 
 from .forms import RideForm
 from .models import Ride
@@ -25,14 +26,16 @@ class RidesListView(ListView):
 
 
 @method_decorator(login_required(login_url='users:login'), 'dispatch')
-class RideDetailView(DetailView):
-    model = Ride
-    template_name = 'rides/ride_detail.html'
-    context_object_name = 'ride'
+class RideDetailView(View):
+    def get(self, request, pk):
+        ride = get_object_or_404(Ride, pk=pk)
+        return render(request, 'rides/ride_detail.html', {'ride': ride})
 
-    def get_context_data(self, **kwargs):
-        context = super(RideDetailView, self).get_context_data(**kwargs)
-        return context
+    def delete(self, request, pk):
+        ride = get_object_or_404(Ride, pk=pk, user=request.user)
+        ride.delete()
+        messages.success(request, "Ride eliminado correctamente")
+        return JsonResponse({'status': True})
 
 
 @method_decorator(login_required(login_url='users:login'), 'dispatch')

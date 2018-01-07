@@ -34,8 +34,24 @@
     {% if user.id == ride.user.id %}
     <div class="col-12 my-2">
         <a href="{% url 'rides:edit_ride' ride.id %}" class="btn btn-info bnt-round">Editar</a>
-        <button class="btn btn-danger btn-round">Eliminar</button>
+        <button id="rideDetailDeleteButton" type="button" class="btn btn-danger btn-round" onclick="onClickRideDetailDeleteButton({{ride.id}})">Eliminar</button>
     </div>
     {% endif %}
 </div>
+<script type="text/javascript">
+    function onClickRideDetailDeleteButton(idRide){
+        var url = "{% url 'rides:ride_detail' 777 %}".replace(777, idRide);
+        $.ajax({
+            type: 'DELETE',
+            url: url ,
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
+            },
+            success: function(data) {
+                if (data.status)
+                    window.location.replace("{% url 'rides:rides' %}");
+            }
+        });
+    }
+</script>
 {% endblock content %}
