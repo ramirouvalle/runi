@@ -13,7 +13,7 @@
                         <hr>
                         <ul>
                             <li><a href="{% url 'rides:new_ride' %}">Crear nuevo ride</a></li>
-                            <li><a href="{% url 'rides:new_ride' %}">Mis rides</a></li>
+                            <li><a href="{% url 'users:user_ride_list' user %}">Mis rides</a></li>
                         </ul>
                     </div>
                 </div>
@@ -35,7 +35,14 @@
 
         <div class="card my-1">
             <div class="card-block">
-                <h4 class="card-title">Lista de rides</h4>
+                <h4 class="card-title">
+                    {% if user_owner is None %}
+                        Lista de rides
+                    {% elif user_owner == user %}
+                        Mis rides
+                    {% else %}
+                        Rides de {{ user_owner }}
+                    {% endif %}</h4>
                 <hr>
                 <div class="row">
 
@@ -43,7 +50,7 @@
                     <div class="col-12 mb-3">
                         <div class="row">
                             <div class="col-12 mb-1">
-                                <a href="{{ride.id}}">{{ ride.title }}</a> <span class="badge badge-default">{{ ride.destination }}</span>
+                                <a href="{% url 'rides:ride_detail' ride.id %}">{{ ride.title }}</a> <span class="badge badge-default">{{ ride.destination }}</span>
                             </div>
                         </div>
 

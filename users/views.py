@@ -1,9 +1,11 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login as fun_login, logout as fun_logout
+from django.views import View
 
+from rides.models import Ride
 from .forms import LoginForm, RegisterForm
 
 
@@ -41,3 +43,12 @@ def logout(request):
     fun_logout(request)
     form = LoginForm()
     return render(request, 'users/login.html', {'form': form})
+
+
+class UserRidesView(View):
+    def get(self, request, username):
+        user_owner = get_object_or_404(User, username=username)
+        rides = Ride.objects.filter(user=user_owner)
+
+        return render(request, 'rides/ride_list.html',
+                      {'user_owner': user_owner, 'rides': [ride.as_dict for ride in rides]})
