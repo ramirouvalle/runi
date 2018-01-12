@@ -1,4 +1,4 @@
-{% extends "./base.html" %}
+{% extends "../rides/base.html" %}
 
 {% block content %}
 <div class="row">
@@ -36,22 +36,20 @@
         <div class="card my-1">
             <div class="card-block">
                 <h4 class="card-title">
-                    {% if user_owner is None %}
-                    Lista de rides
-                    {% elif user_owner == user %}
-                    Mis rides
+                    {% if user_owner == user %}
+                        Mis rides
                     {% else %}
-                    Rides de {{ user_owner }}
-                    {% endif %}</h4>
+                        Rides de {{ user_owner }}
+                    {% endif %}
+                </h4>
                 <hr>
-
                 <div class="row">
+
                     {% for ride in rides %}
                     <div class="col-12 mb-3">
                         <div class="row">
                             <div class="col-12 mb-1">
-                                <a href="{% url 'rides:ride_detail' ride.id %}">{{ ride.title }}</a> <span
-                                    class="badge badge-default">{{ ride.destination }}</span>
+                                <a href="{% url 'rides:ride_detail' ride.id %}">{{ ride.title }}</a> <span class="badge badge-default">{{ ride.destination }}</span>
                             </div>
                         </div>
 
@@ -70,16 +68,15 @@
                                 {% endif %}
                             </div>
                             <div class="col-12 col-sm-12 col-md-4">
-                                <strong>Anfitrión:</strong>
-                                <a href="{% url 'users:user_profile' ride.user.username %}">{{ ride.user.username }}</a>
+                                <strong>Anfitrión:</strong> <a href="#">{{ ride.user.username }}</a>
                             </div>
                         </div>
 
                     </div>
                     <hr>
                     {% endfor %}
-                </div>
 
+                </div>
             </div>
         </div>
 

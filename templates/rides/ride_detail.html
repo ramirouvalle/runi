@@ -27,7 +27,7 @@
                 {% endif %}
             </div>
             <div class="col-12 col-sm-12 col-md-4">
-                <strong>Anfitrión:</strong> <a href="#">{{ ride.user.username }}</a>
+                <strong>Anfitrión:</strong> <a href="{% url 'users:user_profile' ride.user.username %}">{{ ride.user.username }}</a>
             </div>
         </div>
     </div>

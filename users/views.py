@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login as fun_login, logout as fun_logout
 from django.views import View
+from django.views.generic import DetailView
 
 from rides.models import Ride
 from .forms import LoginForm, RegisterForm
@@ -51,4 +52,10 @@ class UserRidesView(View):
         rides = Ride.objects.filter(user=user_owner)
 
         return render(request, 'rides/ride_list.html',
-                      {'user_owner': user_owner, 'rides': [ride.as_dict for ride in rides]})
+                      {'user_owner': user_owner, 'rides': rides})
+
+
+class UserProfile(View):
+    def get(self, request, username):
+        user = get_object_or_404(User, username=username)
+        return render(request, 'users/user_profile.html', {'user': user})
