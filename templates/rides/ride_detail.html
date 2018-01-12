@@ -31,7 +31,7 @@
             </div>
         </div>
     </div>
-    {% if user.id == ride.user.id %}
+    {% if user.is_authenticated and user == ride.user %}
     <div class="col-12 my-2">
         <a href="{% url 'rides:edit_ride' ride.id %}" class="btn btn-info bnt-round">Editar</a>
         <button id="rideDetailDeleteButton" type="button" class="btn btn-danger btn-round" onclick="onClickRideDetailDeleteButton({{ride.id}})">Eliminar</button>

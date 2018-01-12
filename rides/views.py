@@ -1,8 +1,7 @@
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404, redirect
-from django.utils.decorators import method_decorator
 from django.views import View
 from django.views.generic import ListView
 
@@ -14,7 +13,6 @@ def home(request):
     return render(request, 'rides/base.html')
 
 
-@method_decorator(login_required(login_url='users:login'), 'dispatch')
 class RidesListView(ListView):
     model = Ride
     context_object_name = 'rides'
@@ -25,7 +23,6 @@ class RidesListView(ListView):
         return Ride.objects.all()
 
 
-@method_decorator(login_required(login_url='users:login'), 'dispatch')
 class RideDetailView(View):
     def get(self, request, pk):
         ride = get_object_or_404(Ride, pk=pk)
@@ -38,8 +35,7 @@ class RideDetailView(View):
         return JsonResponse({'status': True})
 
 
-@method_decorator(login_required(login_url='users:login'), 'dispatch')
-class NewRideView(View):
+class NewRideView(LoginRequiredMixin, View):
     def get(self, request):
         form = RideForm()
         return render(request, 'rides/ride_form.html', {'form': form})
@@ -53,8 +49,7 @@ class NewRideView(View):
         return render(request, 'rides/ride_form.html', {'form': form})
 
 
-@method_decorator(login_required(login_url='users:login'), 'dispatch')
-class EditRideView(View):
+class EditRideView(LoginRequiredMixin, View):
     def get(self, request, pk):
         ride = get_object_or_404(Ride, pk=pk, user=request.user)
         form = RideForm(instance=ride)

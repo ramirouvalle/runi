@@ -58,4 +58,4 @@ class UserRidesView(View):
 class UserProfile(View):
     def get(self, request, username):
         user = get_object_or_404(User, username=username)
-        return render(request, 'users/user_profile.html', {'user': user})
+        return render(request, 'users/user_profile.html', {'user_profile': user})
