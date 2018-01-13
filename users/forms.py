@@ -3,6 +3,8 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 
+from users.models import Profile
+
 
 class LoginForm(forms.Form):
     username = forms.CharField(max_length=30)
@@ -37,4 +39,10 @@ class RegisterForm(forms.Form):
         user = User(username=data.get('username'), email=data.get('email'))
         user.set_password(data.get('password'))
         user.save()
-        print('User: ' + user.username + ' was saved')
+        Profile.objects.create(user=user)
+
+
+class UserProfileForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        exclude = ('user',)

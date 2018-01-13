@@ -7,3 +7,4 @@ class Profile(models.Model):
     phone_number = models.CharField(max_length=10)
     cell_phone_number = models.CharField(max_length=12)
     student_number = models.CharField(max_length=7)
+    image = models.ImageField(upload_to='users/avatar', null=True, blank=True)

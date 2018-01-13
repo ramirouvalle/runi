@@ -1,0 +1,9 @@
+{% extends "rides/base.html" %}
+
+{% block content %}
+<form action="{% url 'users:user_edit_profile' user.username %}" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Guardar">
+</form>
+{% endblock content %}

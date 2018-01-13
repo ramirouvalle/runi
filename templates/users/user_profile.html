@@ -1,6 +1,18 @@
 {% extends "../rides/base.html" %}
 
 {% block content %}
-<h2>{{ user_profile.username }}</h2>
+<div class="row">
+    <div class="col-12">
+        <h2>{{ user_profile.user.username }}</h2>
+        {% if user.username == user_profile.user.username %}
+        <a href="{% url 'users:user_edit_profile' user.username %}">Editar</a>
+        {% endif %}
+    </div>
+
+    <div class="col-md-4 col-lg-3">
+        <img src="" alt="">
+    </div>
+</div>
+
 <hr>
 {% endblock content %}

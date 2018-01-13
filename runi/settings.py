@@ -70,10 +70,6 @@ TEMPLATES = [
     },
 ]
 
-TEMPLATE_CONTEXT_PROCESSORS = (
-    'django.contrib.messages.context_processors.messages'
-)
-
 WSGI_APPLICATION = 'runi.wsgi.application'
 
 # Database
@@ -134,3 +130,6 @@ MESSAGE_TAGS = {
 }
 
 LOGIN_URL = 'users:login'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
