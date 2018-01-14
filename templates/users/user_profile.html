@@ -1,19 +1,28 @@
 {% extends "../rides/base.html" %}
 
 {% block content %}
-<div class="row">
-    <div class="col-12">
-        <h2>{{ user_profile.user.username }}</h2>
-        {% if user.username == user_profile.user.username %}
-        <a href="{% url 'users:user_edit_profile' user.username %}">Editar</a>
-        {% endif %}
-        <hr>
-    </div>
+<div class="profile">
+    <div class="row">
 
-    <div class="col-md-4 col-lg-3">
-        {% if user_profile.image %}
-        <img src="{{ user_profile.image.url }}" alt="{{ user_profile.user.username}} ">
-        {% endif %}
+        <div class="col-md-4 col-lg-3 text-center">
+            {% if user_profile.image %}
+            <img src="{{ user_profile.image.url }}" alt="{{ user_profile.user.username}}"
+                 class="avatar rounded-circle">
+            {% endif %}
+            <h2>{{ user_profile.user.username }}</h2>
+
+            {% if user.username == user_profile.user.username %}
+            <div class="col-12">
+                <a href="{% url 'users:user_edit_profile' user.username %}" class="btn btn-info">Editar
+                    perfil</a>
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="col-md-8 col-lg-9">
+            <h4>Rides de {{ user_profile.user.username}}</h4>
+            <hr>
+        </div>
     </div>
 </div>
 {% endblock content %}
