@@ -43,7 +43,9 @@ class NewRideView(LoginRequiredMixin, View):
     def post(self, request):
         form = RideForm(request.POST)
         if form.is_valid():
-            form.save()
+            ride = form.save(commit=False)
+            ride.user = request.user
+            ride.save()
             messages.success(request, "Ride creado correctamente")
             return redirect('rides:ride_detail', pk=form.instance.id)
         return render(request, 'rides/ride_form.html', {'form': form})

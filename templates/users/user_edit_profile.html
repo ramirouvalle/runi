@@ -1,7 +1,7 @@
 {% extends "rides/base.html" %}
 
 {% block content %}
-<form action="{% url 'users:user_edit_profile' user.username %}" method="post">
+<form action="{% url 'users:user_edit_profile' user.username %}" method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_p }}
     <input type="submit" value="Guardar">

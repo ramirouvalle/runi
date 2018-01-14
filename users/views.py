@@ -79,8 +79,7 @@ class UserEditProfileView(LoginRequiredMixin, View):
 
         if request.user == user:
             profile = get_object_or_404(Profile, user=user)
-
-            form = UserProfileForm(request.POST, instance=profile)
+            form = UserProfileForm(request.POST, request.FILES, instance=profile)
             if form.is_valid():
                 form.save()
                 messages.success(request, "Perfil actualizado correctamente")
