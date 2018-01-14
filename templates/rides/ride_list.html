@@ -34,57 +34,7 @@
     </div>
 
     <div class="col-md-8 col-lg-9">
-
-        <div class="card my-1">
-            <div class="card-block">
-                <h4 class="card-title">
-                    {% if user_owner is None %}
-                    Lista de rides
-                    {% elif user_owner == user %}
-                    Mis rides
-                    {% else %}
-                    Rides de {{ user_owner }}
-                    {% endif %}</h4>
-                <hr>
-
-                <div class="row">
-                    {% for ride in rides %}
-                    <div class="col-12 mb-3">
-                        <div class="row">
-                            <div class="col-12 mb-1">
-                                <a href="{% url 'rides:ride_detail' ride.id %}">{{ ride.title }}</a> <span
-                                    class="badge badge-default">{{ ride.destination }}</span>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-12 col-sm-6 col-md-4">
-                                <strong>Días:</strong> {{ ride.days.all|join:", " }} <br>
-                                <strong>Horario:</strong> {{ ride.hour }}
-                            </div>
-                            <div class="col-12 col-sm-6 col-md-4">
-                                <strong>Asientos:</strong> {{ ride.passengers }} <br>
-                                <strong>Apoyo económico:</strong>
-                                {% if ride.price == 0 %}
-                                Gratuito
-                                {% else %}
-                                ${{ ride.price }}
-                                {% endif %}
-                            </div>
-                            <div class="col-12 col-sm-12 col-md-4">
-                                <strong>Anfitrión:</strong>
-                                <a href="{% url 'users:user_profile' ride.user.username %}">{{ ride.user.username }}</a>
-                            </div>
-                        </div>
-
-                    </div>
-                    <hr>
-                    {% endfor %}
-                </div>
-
-            </div>
-        </div>
-
+        {% include '../common/ride_list.html' %}
     </div>
 
 </div>

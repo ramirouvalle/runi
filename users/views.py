@@ -49,18 +49,19 @@ def logout(request):
 
 class UserRidesView(View):
     def get(self, request, username):
-        user_owner = get_object_or_404(User, username=username)
-        rides = Ride.objects.filter(user=user_owner)
+        user = get_object_or_404(User, username=username)
+        profile = get_object_or_404(Profile, user=user)
+        rides = Ride.objects.filter(user=user)
 
-        return render(request, 'rides/ride_list.html',
-                      {'user_owner': user_owner, 'rides': rides})
+        return render(request, 'users/user_ride_list.html', {'user_profile': profile, 'rides': rides})
 
 
 class UserProfileView(View):
     def get(self, request, username):
         user = get_object_or_404(User, username=username)
         profile = get_object_or_404(Profile, user=user)
-        return render(request, 'users/user_profile.html', {'user_profile': profile})
+        rides = Ride.objects.filter(user=user)[:3]
+        return render(request, 'users/user_profile.html', {'user_profile': profile, 'rides': rides})
 
 
 class UserEditProfileView(LoginRequiredMixin, View):

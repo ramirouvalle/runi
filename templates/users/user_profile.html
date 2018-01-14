@@ -20,9 +20,9 @@
         </div>
 
         <div class="col-md-8 col-lg-9">
-            <h4>Rides de {{ user_profile.user.username}}</h4>
-            <hr>
+            {% include '../common/ride_list.html' with user_owner=user_profile.user ver_mas=True %}
         </div>
+
     </div>
 </div>
 {% endblock content %}
