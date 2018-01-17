@@ -17,10 +17,9 @@ class RidesListView(ListView):
     model = Ride
     context_object_name = 'rides'
     template_name = 'rides/ride_list.html'
-    ordering = ['-date_publication']
 
     def get_queryset(self):
-        return Ride.objects.all()
+        return Ride.objects.all().order_by('-created_at')
 
 
 class RideDetailView(View):
