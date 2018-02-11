@@ -1,28 +1,40 @@
 {% extends "rides/base.html" %}
+{% load add_class %}
 
 {% block content %}
-<form action="{% url 'users:user_edit_profile' user.username %}" method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    <div class="row">
-        <div class="col-4 col-sm-6">
-            <label>Telefono:</label>
+    <form action="{% url 'users:user_edit_profile' user.username %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div class="form-group row">
+            <div class="col-12">
+                <h3>Editar informacion del perfil</h3>
+            </div>
+            <label class="col-3 col-sm-2 col-form-label">Telefono:</label>
+            <div class="col-9 col-sm-5">
+                {{ form.phone_number|addcss:"form-control" }}
+            </div>
         </div>
-        <div class="col-8 col-sm-6">
-            {{ form.phone_number }}
+
+        <div class="form-group row">
+            <label class="col-3 col-sm-2 col-form-label">Telefono celular:</label>
+            <div class="col-9 col-sm-5">
+                {{ form.cell_phone_number|addcss:"form-control" }}
+            </div>
         </div>
-        <div class="col-4 col-sm-6">
-            <label>Telefono celular:</label>
+
+        <div class="form-group row">
+            <label class="col-3 col-sm-2 col-form-label">Matricula:</label>
+            <div class="col-9 col-sm-5">
+                {{ form.student_number|addcss:"form-control" }}
+            </div>
         </div>
-        <div class="col-8 col-sm-6">
-            {{ form.cell_phone_number }}
+
+        <div class="form-group row">
+            <label class="col-3 col-sm-2 col-form-label">Imagen de perfil:</label>
+            <div class="col-9 col-sm-2">
+                {{ form.image|addcss:"form-control-file" }}
+            </div>
         </div>
-        <div class="col-4 col-sm-6">
-            <label>Matricula:</label>
-        </div>
-        <div class="col-8 col-sm-6">
-            {{ form.student_number }}
-        </div>
-    </div>
-    <input type="submit" value="Guardar">
-</form>
+        <input class="btn btn-success" type="submit" value="Guardar">
+    </form>
 {% endblock content %}
