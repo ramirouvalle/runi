@@ -1,25 +1,133 @@
 {% extends "./base.html" %}
+{% load add_class %}
 
 {% block content %}
 
-<div class="row">
-    <div class="col-12">
+    <div class="row">
+        <div class="col-12">
 
-        {% if not id_ride %}
-        <form action="{% url 'rides:new_ride' %}" method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <input type="submit" value="Save">
-        </form>
-        {% else %}
-        <form action="{% url 'rides:edit_ride' id_ride %}" method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <input type="submit" value="Edit">
-        </form>
-        {% endif %}
+            {% if not id_ride %}
+                <form action="{% url 'rides:new_ride' %}" method="post">
+                    {% csrf_token %}
 
+                    <div class="form-group row">
+                        <div class="col-12">
+                            <h3>Crear nuevo ride</h3>
+                        </div>
+                        <label class="col-3 col-form-label">Título:</label>
+                        <div class="col-9 col-sm-5">
+                            {{ form.title|addcss:"form-control" }}
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-3 col-form-label">Localización de origen:</label>
+                        <div class="col-9 col-sm-5">
+                            {{ form.location|addcss:"form-control" }}
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-3 col-form-label">Destino:</label>
+                        <div class="col-9 col-sm-5">
+                            {{ form.destination|addcss:"form-control" }}
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-3 col-form-label">Días:</label>
+                        <div class="col-9 col-sm-5">
+                            {{ form.days|addcss:"form-control" }}
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-3 col-form-label">Hora de partida:</label>
+                        <div class="col-9 col-sm-5">
+                            {{ form.hour|addcss:"form-control" }}
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-3 col-form-label">Descripción:</label>
+                        <div class="col-9 col-sm-5">
+                            {{ form.description|addcss:"form-control" }}
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-3 col-form-label">Número de pasajeros:</label>
+                        <div class="col-9 col-sm-5">
+                            {{ form.passengers|addcss:"form-control" }}
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-3 col-form-label">Precio de apoyo:</label>
+                        <div class="col-9 col-sm-5">
+                            {{ form.price|addcss:"form-control" }}
+                        </div>
+                    </div>
+
+                    <div class="col-8">
+                        <input type="submit" class="btn btn-success float-right" value="Crear">
+                    </div>
+                </form>
+            {% else %}
+                <form action="{% url 'rides:edit_ride' id_ride %}" method="post">
+                    {% csrf_token %}
+                    <div class="form-group row">
+                        <div class="col-12">
+                            <h3>Editar ride</h3>
+                        </div>
+                        <label class="col-3 col-form-label">Título:</label>
+                        <div class="col-9 col-sm-5">
+                            {{ form.title|addcss:"form-control" }}
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-3 col-form-label">Localización de origen:</label>
+                        <div class="col-9 col-sm-5">
+                            {{ form.location|addcss:"form-control" }}
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-3 col-form-label">Destino:</label>
+                        <div class="col-9 col-sm-5">
+                            {{ form.destination|addcss:"form-control" }}
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-3 col-form-label">Días:</label>
+                        <div class="col-9 col-sm-5">
+                            {{ form.days|addcss:"form-control" }}
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-3 col-form-label">Hora de partida:</label>
+                        <div class="col-9 col-sm-5">
+                            {{ form.hour|addcss:"form-control" }}
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-3 col-form-label">Descripción:</label>
+                        <div class="col-9 col-sm-5">
+                            {{ form.description|addcss:"form-control" }}
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-3 col-form-label">Número de pasajeros:</label>
+                        <div class="col-9 col-sm-5">
+                            {{ form.passengers|addcss:"form-control" }}
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-3 col-form-label">Precio de apoyo:</label>
+                        <div class="col-9 col-sm-5">
+                            {{ form.price|addcss:"form-control" }}
+                        </div>
+                    </div>
+
+                    <div class="col-8">
+                        <input type="submit" class="btn btn-success float-right" value="Editar">
+                    </div>
+                </form>
+            {% endif %}
+
+        </div>
     </div>
-</div>
 
 {% endblock content %}
