@@ -1,0 +1,51 @@
+[
+  {
+    "model": "rides.day",
+    "pk": 1,
+    "fields": {
+      "name": "Lunes"
+    }
+  },
+  {
+    "model": "rides.day",
+    "pk": 2,
+    "fields": {
+      "name": "Martes"
+    }
+  },
+  {
+    "model": "rides.day",
+    "pk": 3,
+    "fields": {
+      "name": "Miercoles"
+    }
+  },
+  {
+    "model": "rides.day",
+    "pk": 4,
+    "fields": {
+      "name": "Jueves"
+    }
+  },
+  {
+    "model": "rides.day",
+    "pk": 5,
+    "fields": {
+      "name": "Viernes"
+    }
+  },
+  {
+    "model": "rides.day",
+    "pk": 6,
+    "fields": {
+      "name": "Sábado"
+    }
+  },
+  {
+    "model": "rides.day",
+    "pk": 7,
+    "fields": {
+      "name": "Domingo"
+    }
+  }
+]

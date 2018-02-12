@@ -1,0 +1,26 @@
+[
+  {
+    "model": "rides.destination",
+    "pk": 1,
+    "fields": {
+      "name": "Ciudad Universitaria",
+      "location": "Pedro de Alba S/N, Ciudad Universitaria, San Nicolás de los Garza, N.L."
+    }
+  },
+  {
+    "model": "rides.destination",
+    "pk": 2,
+    "fields": {
+      "name": "Campus Ciencias de la Salud",
+      "location": "Mitras Centro, 64460 Monterrey, N.L."
+    }
+  },
+  {
+    "model": "rides.destination",
+    "pk": 3,
+    "fields": {
+      "name": "Campus Mederos",
+      "location": "Avenida Lázaro Cárdenas S/n, Mederos, 64930 Monterrey, N.L."
+    }
+  }
+]

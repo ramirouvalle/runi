@@ -3,22 +3,6 @@ from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 
-DAYS = (
-    ('1', 'Lunes'),
-    ('2', 'Martes'),
-    ('3', 'Miercoles'),
-    ('4', 'Jueves'),
-    ('5', 'Viernes'),
-    ('6', 'Sábado'),
-    ('7', 'Domingo'),
-)
-
-DESTINATIONS = (
-    ('universidad', 'Ciudad Universitaria'),
-    ('mederos', 'Campus Mederos'),
-    ('hospital', 'Campus Hospital'),
-)
-
 
 class Destination(models.Model):
     name = models.CharField(max_length=30, null=False)
