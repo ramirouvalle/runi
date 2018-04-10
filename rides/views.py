@@ -76,13 +76,18 @@ class EditRideView(LoginRequiredMixin, View):
 
 class RideRequestView(LoginRequiredMixin, View):
     def post(self, request, pk):
-        print('User applicant: ' + request.user.username)
         ride = get_object_or_404(Ride, pk=pk)
-        print('Ride: ' + ride.title)
-
         ride_request = RideRequest.objects.get_or_create(user=request.user, ride=ride)
-        print(ride_request)
         ride_request.save()
-
         messages.success(request, "Ride solicitado satisfactoriamente")
-        return JsonResponse({'status': True})
+        return JsonResponse({'status': True, 'ride_request': ride_request})
+
+    def delete(self, request, pk):
+        ride = get_object_or_404(Ride, pk=pk)
+        try:
+            ride_request = RideRequest.objects.get(user=request.user, ride=ride)
+            ride_request.delete()
+            messages.success(request, "Ride cancelado satisfactoriamente")
+            return JsonResponse({'status': True})
+        except RideRequest.DoesNotExist:
+            return JsonResponse({'status': False})

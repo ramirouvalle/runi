@@ -52,7 +52,7 @@
         {% if user.is_authenticated and user != ride.user and ride_request != None %}
             <div class="col-12 my-2">
                 <button type="button" class="btn btn-danger btn-round"
-                        onclick="onClickRideDetailRequestButton({{ ride.id }})">Cancelar Ride
+                        onclick="onClickRideDetailDeletetButton({{ ride.id }})">Cancelar Ride
                 </button>
             </div>
         {% endif %}
@@ -83,8 +83,22 @@
                 },
                 success: function (data) {
                     if (data.status)
-                        {#window.location.replace("{% url 'rides:rides' %}");#}
                         console.log("do something()")
+                }
+            });
+        }
+
+        function onClickRideDetailDeletetButton(idRide) {
+            var url = "{% url 'rides:ride_request' 777 %}".replace(777, idRide);
+            $.ajax({
+                type: 'DELETE',
+                url: url,
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
+                },
+                success: function (data) {
+                    if (data.status)
+                        window.location.replace("{% url 'rides:rides' %}");
                 }
             });
         }
