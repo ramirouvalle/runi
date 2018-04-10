@@ -1,57 +1,92 @@
 {% extends "./base.html" %}
 
 {% block content %}
-<div class="row">
-    <div class="col-12">
-        <h2>{{ ride.title }}
-            <small><span class="badge badge-default">{{ ride.destination }}</span></small>
-        </h2>
-        <!--<h6 class="card-subtitle mb-2 text-muted"><span class="badge badge-default">{{ ride.destination }}</span></h6>-->
-        <div class="row">
-            <div class="col-12">
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam et illum non odio porro voluptate
-                    voluptates? A accusamus commodi, delectus facilis impedit nulla temporibus voluptates. Inventore
-                    laboriosam magni mollitia sunt!</p>
-            </div>
-            <div class="col-12 col-sm-6 col-md-4">
-                <strong>Días:</strong> {{ ride.days.all|join:", " }} <br>
-                <strong>Horario:</strong> {{ ride.hour }}
-            </div>
-            <div class="col-12 col-sm-6 col-md-4">
-                <strong>Asientos:</strong> {{ ride.passengers }} <br>
-                <strong>Apoyo económico:</strong>
-                {% if ride.price == 0 %}
-                Gratuito
-                {% else %}
-                ${{ ride.price }}
-                {% endif %}
-            </div>
-            <div class="col-12 col-sm-12 col-md-4">
-                <strong>Anfitrión:</strong> <a href="{% url 'users:user_profile' ride.user.username %}">{{ ride.user.username }}</a>
+    <div class="row">
+        <div class="col-12">
+            <h2>{{ ride.title }}
+                <small><span class="badge badge-default">{{ ride.destination }}</span></small>
+            </h2>
+            <!--<h6 class="card-subtitle mb-2 text-muted"><span class="badge badge-default">{{ ride.destination }}</span></h6>-->
+            <div class="row">
+                <div class="col-12">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam et illum non odio porro
+                        voluptate
+                        voluptates? A accusamus commodi, delectus facilis impedit nulla temporibus voluptates. Inventore
+                        laboriosam magni mollitia sunt!</p>
+                </div>
+                <div class="col-12 col-sm-6 col-md-4">
+                    <strong>Días:</strong> {{ ride.days.all|join:", " }} <br>
+                    <strong>Horario:</strong> {{ ride.hour }}
+                </div>
+                <div class="col-12 col-sm-6 col-md-4">
+                    <strong>Asientos:</strong> {{ ride.passengers }} <br>
+                    <strong>Apoyo económico:</strong>
+                    {% if ride.price == 0 %}
+                        Gratuito
+                    {% else %}
+                        ${{ ride.price }}
+                    {% endif %}
+                </div>
+                <div class="col-12 col-sm-12 col-md-4">
+                    <strong>Anfitrión:</strong> <a
+                        href="{% url 'users:user_profile' ride.user.username %}">{{ ride.user.username }}</a>
+                </div>
             </div>
         </div>
+        {% if user.is_authenticated and user == ride.user %}
+            <div class="col-12 my-2">
+                <a href="{% url 'rides:edit_ride' ride.id %}" class="btn btn-info bnt-round">Editar</a>
+                <button id="rideDetailDeleteButton" type="button" class="btn btn-danger btn-round"
+                        onclick="onClickRideDetailDeleteButton({{ ride.id }})">Eliminar
+                </button>
+            </div>
+        {% endif %}
+        {% if user.is_authenticated and user != ride.user and ride_request == None %}
+            <div class="col-12 my-2">
+                <button type="button" class="btn btn-success btn-round"
+                        onclick="onClickRideDetailRequestButton({{ ride.id }})">Solicitar Ride
+                </button>
+            </div>
+        {% endif %}
+
+        {% if user.is_authenticated and user != ride.user and ride_request != None %}
+            <div class="col-12 my-2">
+                <button type="button" class="btn btn-danger btn-round"
+                        onclick="onClickRideDetailRequestButton({{ ride.id }})">Cancelar Ride
+                </button>
+            </div>
+        {% endif %}
     </div>
-    {% if user.is_authenticated and user == ride.user %}
-    <div class="col-12 my-2">
-        <a href="{% url 'rides:edit_ride' ride.id %}" class="btn btn-info bnt-round">Editar</a>
-        <button id="rideDetailDeleteButton" type="button" class="btn btn-danger btn-round" onclick="onClickRideDetailDeleteButton({{ride.id}})">Eliminar</button>
-    </div>
-    {% endif %}
-</div>
-<script type="text/javascript">
-    function onClickRideDetailDeleteButton(idRide){
-        var url = "{% url 'rides:ride_detail' 777 %}".replace(777, idRide);
-        $.ajax({
-            type: 'DELETE',
-            url: url ,
-            beforeSend: function(xhr) {
-                xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
-            },
-            success: function(data) {
-                if (data.status)
-                    window.location.replace("{% url 'rides:rides' %}");
-            }
-        });
-    }
-</script>
+    <script type="text/javascript">
+        function onClickRideDetailDeleteButton(idRide) {
+            var url = "{% url 'rides:ride_detail' 777 %}".replace(777, idRide);
+            $.ajax({
+                type: 'DELETE',
+                url: url,
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
+                },
+                success: function (data) {
+                    if (data.status)
+                        window.location.replace("{% url 'rides:rides' %}");
+                }
+            });
+        }
+
+        function onClickRideDetailRequestButton(idRide) {
+            var url = "{% url 'rides:ride_request' 777 %}".replace(777, idRide);
+            $.ajax({
+                type: 'POST',
+                url: url,
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
+                },
+                success: function (data) {
+                    if (data.status)
+                        {#window.location.replace("{% url 'rides:rides' %}");#}
+                        console.log("do something()")
+                }
+            });
+        }
+    </script>
 {% endblock content %}

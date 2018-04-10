@@ -47,3 +47,9 @@ class Ride(models.Model):
             'description': self.description,
             'user': self.user.username
         }
+
+
+class RideRequest(models.Model):
+    user = models.ForeignKey(User)
+    ride = models.ForeignKey(Ride)
+    created_at = models.DateTimeField(auto_now_add=True)

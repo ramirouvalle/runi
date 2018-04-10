@@ -6,7 +6,7 @@ from django.views import View
 from django.views.generic import ListView
 
 from .forms import RideForm
-from .models import Ride
+from .models import Ride, RideRequest
 
 
 def home(request):
@@ -25,7 +25,15 @@ class RidesListView(ListView):
 class RideDetailView(View):
     def get(self, request, pk):
         ride = get_object_or_404(Ride, pk=pk)
-        return render(request, 'rides/ride_detail.html', {'ride': ride})
+        ride_request = None
+
+        if request.user.is_authenticated:
+            try:
+                ride_request = RideRequest.objects.get(ride=ride, user=request.user)
+            except RideRequest.DoesNotExist:
+                pass
+
+        return render(request, 'rides/ride_detail.html', {'ride': ride, 'ride_request': ride_request})
 
     def delete(self, request, pk):
         ride = get_object_or_404(Ride, pk=pk, user=request.user)
@@ -64,3 +72,17 @@ class EditRideView(LoginRequiredMixin, View):
             messages.success(request, "Ride modificado correctamente")
             return redirect('rides:ride_detail', pk=pk)
         return render(request, 'rides/ride_form.html', {'form': form, 'id_ride': pk})
+
+
+class RideRequestView(LoginRequiredMixin, View):
+    def post(self, request, pk):
+        print('User applicant: ' + request.user.username)
+        ride = get_object_or_404(Ride, pk=pk)
+        print('Ride: ' + ride.title)
+
+        ride_request = RideRequest.objects.get_or_create(user=request.user, ride=ride)
+        print(ride_request)
+        ride_request.save()
+
+        messages.success(request, "Ride solicitado satisfactoriamente")
+        return JsonResponse({'status': True})
